@@ -1,55 +1,56 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0056b3">
+    
+    <title>SilverShield SG</title>
+
     <style>
-        :root { --primary: #0056b3; --danger: #d00000; --success: #28a745; --bg: #f0f2f5; }
-        body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg); display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        :root { --primary: #0056b3; --danger: #d00000; --success: #28a745; --bg: #f4f7f9; }
+        body { margin: 0; font-family: sans-serif; background: var(--bg); display: flex; flex-direction: column; align-items: center; min-height: 100vh; -webkit-user-select: none; }
         
-        /* Header / App Bar */
-        .app-header { background: var(--primary); color: white; width: 100%; padding: 15px 0; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 100; }
-        .app-header h1 { margin: 0; font-size: 22px; letter-spacing: 1px; }
-        .app-header p { margin: 0; font-size: 12px; opacity: 0.8; }
+        .app-header { background: var(--primary); color: white; width: 100%; padding: 20px 0; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .app-header h1 { margin: 0; font-size: 24px; }
 
-        /* Setup Card */
-        #setup-zone { width: 90%; max-width: 360px; background: white; margin-top: 30px; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); box-sizing: border-box; }
-        .setup-title { color: var(--primary); font-size: 20px; margin-bottom: 10px; font-weight: bold; }
-        .setup-desc { font-size: 14px; color: #666; margin-bottom: 20px; line-height: 1.4; }
+        #setup-zone { width: 90%; max-width: 380px; background: white; margin-top: 20px; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); box-sizing: border-box; }
+        .contact-row { display: flex; align-items: center; margin-bottom: 15px; background: #fdfdfd; padding: 8px; border-radius: 12px; border: 1px solid #eee; }
+        .contact-input { flex: 1; border: none; background: transparent; padding: 10px; font-size: 16px; outline: none; }
+        .label-tag { font-size: 10px; font-weight: bold; background: #e9ecef; padding: 5px 8px; border-radius: 6px; color: #495057; width: 60px; text-align: center; }
+
+        .save-btn { background: var(--primary); color: white; padding: 18px; border: none; border-radius: 15px; font-size: 18px; font-weight: bold; width: 100%; cursor: pointer; margin-top: 10px; }
+
+        #app-zone { display: none; flex-direction: column; align-items: center; width: 100%; padding-top: 30px; }
+        .sos-btn-container { width: 250px; height: 250px; background: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 20px 40px rgba(208,0,0,0.15); margin-bottom: 30px; }
+        #sos-btn { width: 220px; height: 220px; background: var(--danger); border-radius: 50%; color: white; display: flex; justify-content: center; align-items: center; font-size: 36px; font-weight: 900; border: 10px solid #ffccd5; text-align: center; cursor: pointer; }
+        #sos-btn:active { transform: scale(0.96); background: #b00000; }
         
-        .contact-row { display: flex; align-items: center; margin-bottom: 15px; background: #f9f9f9; padding: 5px 10px; border-radius: 10px; border: 1px solid #eee; }
-        .contact-input { flex: 1; border: none; background: transparent; padding: 12px; font-size: 16px; outline: none; }
-        .label-tag { font-size: 10px; font-weight: bold; background: #ddd; padding: 4px 8px; border-radius: 5px; color: #555; width: 50px; text-align: center; }
-
-        .save-btn { background: var(--primary); color: white; padding: 18px; border: none; border-radius: 12px; font-size: 18px; font-weight: bold; width: 100%; cursor: pointer; margin-top: 10px; }
-
-        /* Main SOS Screen */
-        #app-zone { display: none; flex-direction: column; align-items: center; width: 100%; padding-top: 40px; }
-        .sos-circle-outer { width: 240px; height: 240px; background: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 15px 35px rgba(208,0,0,0.2); border: 2px solid #eee; }
-        #sos-btn { width: 210px; height: 210px; background: var(--danger); border-radius: 50%; color: white; display: flex; justify-content: center; align-items: center; font-size: 32px; font-weight: 900; border: 8px solid #ffccd5; text-align: center; box-shadow: inset 0 0 20px rgba(0,0,0,0.2); cursor: pointer; }
-        
-        .action-btns { width: 90%; max-width: 320px; margin-top: 35px; }
-        .btn { padding: 20px; border-radius: 15px; font-size: 19px; font-weight: bold; text-decoration: none; text-align: center; display: block; margin-bottom: 15px; color: white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .action-btns { width: 85%; max-width: 320px; }
+        .btn { padding: 18px; border-radius: 15px; font-size: 20px; font-weight: bold; text-decoration: none; text-align: center; display: block; margin-bottom: 15px; color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         .call-btn { background: var(--success); }
-        .sms-btn { background: #ff8c00; display: none; animation: slideIn 0.3s ease-out; }
+        .sms-btn { background: #fd7e14; display: none; animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 
-        #status { margin-top: 15px; font-weight: bold; color: #666; font-size: 16px; transition: all 0.3s; }
-        .footer-link { margin-top: 40px; color: #999; text-decoration: underline; cursor: pointer; font-size: 13px; padding-bottom: 20px; }
+        #status { font-weight: bold; color: #6c757d; font-size: 16px; margin-top: 10px; }
+        .settings-btn { margin-top: 40px; color: #adb5bd; font-size: 14px; text-decoration: none; }
 
-        @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     </style>
 </head>
 <body>
 
     <header class="app-header">
         <h1>🛡️ SilverShield SG</h1>
-        <p>Active Emergency Protection</p>
     </header>
 
     <div id="setup-zone">
-        <div class="setup-title">Welcome</div>
-        <div class="setup-desc">Please enter your family's Singapore phone numbers. The first number will be your primary contact.</div>
+        <h2 style="margin-top:0; color:#333">Setup Contacts</h2>
+        <p style="color:#666; font-size:14px">Add up to 5 family members. Number 1 is your Primary contact.</p>
         
         <div class="contact-row"><span class="label-tag">PRIMARY</span><input type="tel" class="contact-input" placeholder="8123 4567" id="n1"></div>
         <div class="contact-row"><span class="label-tag">FAMILY 2</span><input type="tel" class="contact-input" id="n2"></div>
@@ -57,21 +58,21 @@
         <div class="contact-row"><span class="label-tag">FAMILY 4</span><input type="tel" class="contact-input" id="n4"></div>
         <div class="contact-row"><span class="label-tag">FAMILY 5</span><input type="tel" class="contact-input" id="n5"></div>
         
-        <button class="save-btn" onclick="saveContacts()">ACTIVATE PROTECTON</button>
+        <button class="save-btn" onclick="saveContacts()">ACTIVATE NOW</button>
     </div>
 
     <div id="app-zone">
-        <div class="sos-circle-outer">
-            <div id="sos-btn" onclick="startSOS()">HELP<br>救命</div>
+        <div class="sos-btn-container">
+            <div id="sos-btn" onclick="triggerSOS()">HELP<br>救命</div>
         </div>
         
         <div class="action-btns">
             <a id="call-link" href="#" class="btn call-btn">📞 CALL PRIMARY</a>
-            <a id="sms-link" href="#" class="btn sms-btn">📢 SEND SOS TO ALL</a>
+            <a id="sms-link" href="#" class="btn sms-btn">📢 ALERT ALL (SMS)</a>
         </div>
         
         <p id="status">Status: Secured</p>
-        <div class="footer-link" onclick="resetAll()">Settings & Contacts</div>
+        <a href="#" class="settings-btn" onclick="resetSettings()">Edit Emergency Contacts</a>
     </div>
 
     <script>
@@ -90,7 +91,6 @@
             const ids = ['n1', 'n2', 'n3', 'n4', 'n5'];
             const nums = ids.map(id => document.getElementById(id).value.trim()).filter(n => n.length >= 8);
             if (nums.length === 0) return alert("Please enter at least one number.");
-            
             const formatted = nums.map(formatSGNumber);
             localStorage.setItem('sos_contacts', JSON.stringify(formatted));
             showApp(formatted);
@@ -102,32 +102,28 @@
             document.getElementById('call-link').href = "tel:" + nums[0];
         }
 
-        function startSOS() {
-            document.getElementById('status').innerText = "📍 Finding your location...";
-            document.getElementById('status').style.color = "#ff8c00";
-            if(navigator.vibrate) navigator.vibrate([400, 100, 400]);
+        function triggerSOS() {
+            document.getElementById('status').innerText = "📍 Locating...";
+            if(navigator.vibrate) navigator.vibrate([500, 100, 500]);
 
             navigator.geolocation.getCurrentPosition(function(pos) {
                 const mapUrl = "https://www.google.com/maps?q=" + pos.coords.latitude + "," + pos.coords.longitude;
-                const message = "EMERGENCY! I need help. My current location: " + mapUrl;
+                const message = "EMERGENCY! I need help. My location: " + mapUrl;
                 const nums = JSON.parse(localStorage.getItem('sos_contacts'));
                 
                 const smsUrl = "sms:" + nums.join(",") + "?body=" + encodeURIComponent(message);
-                
                 const smsBtn = document.getElementById('sms-link');
                 smsBtn.href = smsUrl;
                 smsBtn.style.display = "block";
                 
-                document.getElementById('status').innerText = "✅ Location Locked!";
-                document.getElementById('status').style.color = "#28a745";
+                document.getElementById('status').innerText = "✅ Location Shared";
             }, function() {
-                document.getElementById('status').innerText = "❌ GPS Error - Check Settings";
-                document.getElementById('status').style.color = "red";
+                document.getElementById('status').innerText = "❌ GPS Error";
             }, {enableHighAccuracy: true});
         }
 
-        function resetAll() {
-            if(confirm("Change your emergency contact numbers?")) {
+        function resetSettings() {
+            if(confirm("Reset all contacts?")) {
                 localStorage.clear();
                 location.reload();
             }
