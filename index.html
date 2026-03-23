@@ -4,75 +4,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
-    <link rel="manifest" href="data:application/manifest+json,{'name':'SilverShield SG','short_name':'Shield','start_url':'.','display':'standalone','background_color':'#0056b3','theme_color':'#0056b3'}" />
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    
     <title>SilverShield SG</title>
     <style>
         :root { --primary: #0056b3; --danger: #d00000; --success: #28a745; --bg: #f4f7f9; }
         body { margin: 0; font-family: sans-serif; background: var(--bg); display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-        .app-header { background: var(--primary); color: white; width: 100%; padding: 20px 0; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        #setup-zone, #app-zone { width: 90%; max-width: 380px; background: white; margin-top: 20px; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); box-sizing: border-box; }
-        #app-zone { display: none; flex-direction: column; align-items: center; margin-top: 40px; }
-        .contact-row { display: flex; align-items: center; margin-bottom: 15px; background: #fdfdfd; padding: 8px; border-radius: 12px; border: 1px solid #eee; }
-        .contact-input { flex: 1; border: none; background: transparent; padding: 10px; font-size: 16px; outline: none; }
-        .save-btn { background: var(--primary); color: white; padding: 18px; border: none; border-radius: 15px; font-size: 18px; font-weight: bold; width: 100%; cursor: pointer; }
-        #sos-btn { width: 220px; height: 220px; background: var(--danger); border-radius: 50%; color: white; display: flex; justify-content: center; align-items: center; font-size: 36px; font-weight: 900; border: 10px solid #ffccd5; text-align: center; cursor: pointer; box-shadow: 0 15px 30px rgba(208,0,0,0.2); }
-        .btn { width: 100%; padding: 18px; border-radius: 15px; font-size: 20px; font-weight: bold; text-decoration: none; text-align: center; display: block; margin-top: 20px; color: white; }
-        .call-btn { background: var(--success); }
-        .sms-btn { background: #fd7e14; display: none; }
+        
+        .app-header { background: var(--primary); color: white; width: 100%; padding: 20px 0; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        
+        #setup-zone, #app-zone { width: 92%; max-width: 380px; background: white; margin-top: 25px; padding: 25px; border-radius: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.05); box-sizing: border-box; }
+        
+        h2 { margin-top: 0; color: #333; font-size: 22px; text-align: center; }
+        p { color: #666; font-size: 14px; text-align: center; margin-bottom: 20px; }
+
+        .input-group { margin-bottom: 12px; }
+        label { display: block; font-size: 11px; font-weight: bold; color: var(--primary); margin-bottom: 5px; text-transform: uppercase; }
+        input { width: 100%; padding: 14px; border: 1px solid #ddd; border-radius: 12px; font-size: 18px; box-sizing: border-box; outline: none; background: #fafafa; }
+        
+        .btn { width: 100%; padding: 18px; border-radius: 15px; font-size: 20px; font-weight: bold; border: none; color: white; cursor: pointer; display: block; text-decoration: none; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .save-btn { background: var(--primary); margin-top: 15px; }
+        
+        #app-zone { display: none; flex-direction: column; align-items: center; }
+        #sos-btn { width: 220px; height: 220px; background: var(--danger); border-radius: 50%; border: 10px solid #ffccd5; color: white; display: flex; justify-content: center; align-items: center; font-size: 36px; font-weight: 900; margin: 20px auto; text-align: center; box-shadow: 0 12px 25px rgba(208,0,0,0.2); }
+        .call-btn { background: var(--success); margin-top: 15px; }
+        .sms-btn { background: #fd7e14; display: none; margin-top: 15px; }
+        
+        #status { margin-top: 20px; font-weight: bold; color: #555; font-size: 16px; }
+        .reset-link { margin-top: 40px; color: #bbb; text-decoration: underline; font-size: 13px; cursor: pointer; padding-bottom: 20px; }
     </style>
 </head>
 <body>
-    <header class="app-header"><h1>🛡️ SilverShield SG</h1></header>
+
+    <header class="app-header">
+        <h1>🛡️ SilverShield SG</h1>
+    </header>
+
     <div id="setup-zone">
-        <h2>Setup Contacts</h2>
-        <div class="contact-row"><input type="tel" class="contact-input" placeholder="Primary Number" id="n1"></div>
-        <div class="contact-row"><input type="tel" class="contact-input" placeholder="Family 2" id="n2"></div>
-        <div class="contact-row"><input type="tel" class="contact-input" placeholder="Family 3" id="n3"></div>
-        <button class="save-btn" onclick="saveContacts()">ACTIVATE NOW</button>
+        <h2>Circle of Care</h2>
+        <p>Set up your 3 emergency contacts.</p>
+        
+        <div class="input-group">
+            <label>1. Primary Contact (Spouse/Child)</label>
+            <input type="tel" id="n1" placeholder="8123 4567">
+        </div>
+        
+        <div class="input-group">
+            <label>2. Family Member</label>
+            <input type="tel" id="n2" placeholder="9876 5432">
+        </div>
+
+        <div class="input-group">
+            <label>3. Family Member / Neighbor</label>
+            <input type="tel" id="n3" placeholder="8765 4321">
+        </div>
+
+        <button class="btn save-btn" onclick="saveContacts()">ACTIVATE PROTECTON</button>
     </div>
+
     <div id="app-zone">
         <div id="sos-btn" onclick="triggerSOS()">HELP<br>救命</div>
+        
         <a id="call-link" href="#" class="btn call-btn">📞 CALL PRIMARY</a>
         <a id="sms-link" href="#" class="btn sms-btn">📢 ALERT ALL (SMS)</a>
-        <p id="status" style="margin-top:20px; font-weight:bold">Status: Secured</p>
+        
+        <p id="status">Status: Secured</p>
+        <div class="reset-link" onclick="resetApp()">Change Emergency Numbers</div>
     </div>
+
     <script>
         window.onload = function() {
-            const data = localStorage.getItem('sos_contacts');
-            if (data) showApp(JSON.parse(data));
+            const savedData = localStorage.getItem('silvershield_v5');
+            if (savedData) {
+                showApp(JSON.parse(savedData));
+            }
         };
-        function formatSGNumber(n) {
-            let clean = n.replace(/\D/g, ''); 
-            if (clean.length === 8) clean = '65' + clean;
-            return '+' + clean;
+
+        function formatSG(n) {
+            let c = n.replace(/\D/g, ''); 
+            if (c.length === 8) c = '65' + c;
+            return '+' + c;
         }
+
         function saveContacts() {
-            const ids = ['n1', 'n2', 'n3'];
-            const nums = ids.map(id => document.getElementById(id).value.trim()).filter(n => n.length >= 8);
-            if (nums.length === 0) return alert("Enter a number.");
-            const formatted = nums.map(formatSGNumber);
-            localStorage.setItem('sos_contacts', JSON.stringify(formatted));
-            showApp(formatted);
+            const v1 = document.getElementById('n1').value.trim();
+            const v2 = document.getElementById('n2').value.trim();
+            const v3 = document.getElementById('n3').value.trim();
+
+            if (v1.length < 8) {
+                alert("Primary contact is required.");
+                return;
+            }
+
+            const rawNums = [v1, v2, v3].filter(num => num.length >= 8);
+            const formattedNums = rawNums.map(formatSG);
+
+            localStorage.setItem('silvershield_v5', JSON.stringify(formattedNums));
+            showApp(formattedNums);
         }
+
         function showApp(nums) {
             document.getElementById('setup-zone').style.display = 'none';
             document.getElementById('app-zone').style.display = 'flex';
             document.getElementById('call-link').href = "tel:" + nums[0];
         }
+
         function triggerSOS() {
-            document.getElementById('status').innerText = "📍 Locating...";
+            document.getElementById('status').innerText = "📍 Finding Location...";
+            document.getElementById('status').style.color = "orange";
+            if(navigator.vibrate) navigator.vibrate([500, 100, 500]);
+
             navigator.geolocation.getCurrentPosition(function(pos) {
-                const mapUrl = "https://www.google.com/maps?q=" + pos.coords.latitude + "," + pos.coords.longitude;
-                const message = "EMERGENCY! I need help. My location: " + mapUrl;
-                const nums = JSON.parse(localStorage.getItem('sos_contacts'));
+                const mapUrl = "http://maps.google.com/maps?q=" + pos.coords.latitude + "," + pos.coords.longitude;
+                const message = "EMERGENCY! I need help. My current location is: " + mapUrl;
+                
+                const nums = JSON.parse(localStorage.getItem('silvershield_v5'));
+                // Android Multi-SMS Protocol
                 document.getElementById('sms-link').href = "sms:" + nums.join(",") + "?body=" + encodeURIComponent(message);
                 document.getElementById('sms-link').style.display = "block";
-                document.getElementById('status').innerText = "✅ Location Found";
-            });
+                
+                document.getElementById('status').innerText = "✅ Location Locked";
+                document.getElementById('status').style.color = "green";
+            }, function() {
+                document.getElementById('status').innerText = "❌ GPS Error - Check Settings";
+                document.getElementById('status').style.color = "red";
+            }, {enableHighAccuracy: true});
+        }
+
+        function resetApp() {
+            if(confirm("Edit emergency contacts?")) {
+                localStorage.clear();
+                location.reload();
+            }
         }
     </script>
 </body>

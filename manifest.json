@@ -1,0 +1,17 @@
+
+{
+  "name": "SilverShield SG",
+  "short_name": "Shield",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#0056b3",
+  "theme_color": "#0056b3",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/1063/1063073.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
