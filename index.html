@@ -93,20 +93,43 @@
             });
         }
 
+        
         function getLocation() {
-            document.getElementById('status').innerText = "📍 Finding Location...";
+            document.getElementById('status').innerText = "📍 Searching for GPS...";
+            document.getElementById('status').style.color = "orange";
+            
+            const options = {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0
+            };
+
             navigator.geolocation.getCurrentPosition(p => {
-                const mapUrl = "https://www.google.com/maps?q=" + p.coords.latitude + "," + p.coords.longitude;
+                const lat = p.coords.latitude;
+                const lon = p.coords.longitude;
+                const mapUrl = "https://www.google.com/maps?q=" + lat + "," + lon;
                 const msg = encodeURIComponent("🚨 EMERGENCY! I need help. My location: " + mapUrl);
                 const contacts = JSON.parse(localStorage.getItem('ss_global_v1'));
                 
                 contacts.forEach(c => {
                     const btn = document.getElementById('wa-' + c.phone.replace(/\+/g, ''));
-                    // Use WhatsApp Web/App Universal Link
                     btn.href = "https://wa.me/" + c.phone.replace(/\+/g, '') + "?text=" + msg;
-                    btn.onclick = null; // Enable the button
+                    btn.onclick = null;
                     btn.style.opacity = "1";
                 });
+                document.getElementById('status').innerText = "✅ Location Found! Tap a name:";
+                document.getElementById('status').style.color = "green";
+            }, (err) => {
+                console.error(err);
+                if(err.code === 1) {
+                    document.getElementById('status').innerText = "❌ Error: Permission Denied. Check Phone Settings.";
+                } else {
+                    document.getElementById('status').innerText = "❌ Error: GPS Signal Weak. Try moving near a window.";
+                }
+                document.getElementById('status').style.color = "red";
+            }, options);
+        }
+);
                 document.getElementById('status').innerText = "✅ Location Ready! Tap a name below:";
                 document.getElementById('status').style.color = "green";
             }, () => {
