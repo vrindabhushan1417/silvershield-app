@@ -1,15 +1,14 @@
 
 {
-  "name": "SilverShield SG",
+  "name": "SilverShield Global",
   "short_name": "Shield",
-  "description": "Emergency SOS application for seniors to contact family and share location.",
+  "description": "Global Emergency SOS app for seniors. Send WhatsApp alerts with location to family worldwide.",
   "id": "/silvershield-app/",
-  "orientation": "portrait",
-  "categories": ["medical", "social", "utilities"],
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#0056b3",
   "theme_color": "#0056b3",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "https://cdn-icons-png.flaticon.com/512/1063/1063073.png",
